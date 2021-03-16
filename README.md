@@ -33,6 +33,6 @@ Or take a look at an example python wrapper class.
 python .docker/wrapper.py <path-to-caretta> "--help"
 ```
 
-#Filepaths
+# Filepaths
 Note that you need to link your system storage with the container in order to use the cli.
 Do so by editing the `volumes:` field in the .docker/docker-compose.yml file.
