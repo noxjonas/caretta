@@ -1,77 +1,38 @@
-<p align="center"><img src="caretta_logo.png" width="300" title="Caretta Logo"></p>
+# Caretta docker image
 
-# Caretta – A multiple protein structure alignment and feature extraction suite
+Unofficial fork of the protein structure alignment tool Caretta.
+Launch the web app or use the caretta-cli on any platform using Docker.
 
-Caretta is a software-suite to perform multiple protein structure alignment and structure feature extraction.
+For official release and documentation see: https://github.com/TurtleTools/caretta
 
-Visit the [demo server](http://bioinformatics.nl/caretta) to see caretta's capabilities. The server only allows alignment of up to 50 proteins at once.
-The command-line tool and self-hosted web application do not have this restriction.
 
-## Installation
 
-### Requirements
-#### Operating system support
-1. Linux and Mac
-* All capabilities are supported
-2. Windows
-* The external tool **msms** is not available in Windows. Due to this:
-    * Feature extraction is not available.
-    * `features` argument in caretta-cli must always be run with `--only-dssp`. 
-    * `caretta-app` is not available.
+# Usage
 
-#### Software
-Caretta works with Python 3.7+
-Run the following commands to install required external dependencies (Mac and Linux only):
-```bash
-conda install -c salilab dssp
-conda install -c bioconda msms
-```
+Git clone and navigate to the directory
 
-### Download caretta
-```bash
-git clone https://github.com/TurtleTools/caretta.git
+```commandline
+git clone https://github.com/noxjonas/caretta.git
 cd caretta
 ```
 
-### Install both the command-line interface and the web-application (Mac and Linux only):
-```bash
-pip install -e ".[GUI]"
+To build docker image run:
+```commandline
+docker-compose -f .docker/docker-dompose.yml build
 ```
 
-### Install only the command-line interface:
-```bash
-pip install .
+To start the container run:
+```commandline
+docker-compose -f .docker/docker-compose.yml up -d
 ```
 
-### Environment variables:
-```bash
-export OMP_NUM_THREADS=1 # this should always be 1
-export NUMBA_NUM_THREADS=20 # change to required number of threads
+Navigate to http://localhost:8091 for the web app.
+
+Or take a look at an example python wrapper class.
+```commandline
+python .docker/wrapper.py <path-to-caretta> "--help"
 ```
 
-## Usage
-
-### Command-line Usage
-
-```bash
-caretta-cli input_pdb_folder
-# e.g. caretta-cli test_data  
-# caretta-cli --help for more options
-```
-
-### Web-application Usage (Mac and Linux only)
-
-```bash
-caretta-app <host-ip> <port> 
-# e.g. caretta-app localhost 8091
-```
-Then go to localhost:8091/caretta in a browser window.
-
-## Publications
-Janani Durairaj, Mehmet Akdel, Dick de Ridder, Aalt DJ can Dijk. "Fast and adaptive protein structure representations for machine learning." [Machine Learning for Structural Biology Workshop](mlsb.io), NeurIPS 2020 (https://www.mlsb.io/papers/MLSB2020_Fast_and_adaptive_protein.pdf)
-
-Poster:
-![MLSB2020.png](MLSB2020.png)
-
-
-Akdel, Mehmet, Janani Durairaj, Dick de Ridder, and Aalt DJ van Dijk. "Caretta-A Multiple Protein Structure Alignment and Feature Extraction Suite." Computational and Structural Biotechnology Journal (2020). (https://doi.org/10.1016/j.csbj.2020.03.011)
+#Filepaths
+Note that you need to link your system storage with the container in order to use the cli.
+Do so by editing the `volumes:` field in the .docker/docker-compose.yml file.

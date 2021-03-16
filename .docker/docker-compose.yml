@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  caretta:
+    build:
+      context: ../
+      dockerfile: ./.docker/Dockerfile
+    command: caretta-app 0.0.0.0 8091
+    ports:
+      - 8091:8091
+    environment:
+      OMP_NUM_THREADS: 1
+      NUMBA_NUM_THREADS: 20
+    volumes:
+      - C:/:/C/
+
